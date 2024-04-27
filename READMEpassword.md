@@ -54,3 +54,9 @@ while True:
 # Generate password
 password = generate_password(length)
 print("Generated password:", password)
+
+
+output:  
+
+Enter desired password length (minimum 8 characters): 10
+Generated password: Fq$2N3&Jbk
