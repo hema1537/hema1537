@@ -2,42 +2,41 @@ import random
 import string
 
 def generate_password(length, uppercase=True, lowercase=True, numbers=True, symbols=True):
-    # Define character sets based on user's choices
-    chars = ''
+    characters = ''
     if uppercase:
-        chars += string.ascii_uppercase
+        characters += string.ascii_uppercase
     if lowercase:
-        chars += string.ascii_lowercase
+        characters += string.ascii_lowercase
     if numbers:
-        chars += string.digits
+        characters += string.digits
     if symbols:
-        chars += string.punctuation
+        characters += string.punctuation
     
-    # Ensure at least one character type is chosen
-    if not chars:
-        raise ValueError("At least one character type must be selected")
+    if not characters:
+        return "Error: No character types selected for password generation."
     
-    # Generate the password
-    password = ''.join(random.choice(chars) for _ in range(length))
+    password = ''.join(random.choice(characters) for _ in range(length))
+    
+    # Ensure that the generated password meets requested criteria
+    while (uppercase and not any(char.isupper() for char in password)) \
+            or (lowercase and not any(char.islower() for char in password)) \
+            or (numbers and not any(char.isdigit() for char in password)) \
+            or (symbols and not any(char in string.punctuation for char in password)):
+        password = ''.join(random.choice(characters) for _ in range(length))
+    
     return password
 
-def main():
-    try:
-        length = int(input("Enter the length of the password: "))
-        uppercase = input("Include uppercase letters? (y/n): ").lower() == 'y'
-        lowercase = input("Include lowercase letters? (y/n): ").lower() == 'y'
-        numbers = input("Include numbers? (y/n): ").lower() == 'y'
-        symbols = input("Include symbols? (y/n): ").lower() == 'y'
-        num_passwords = int(input("How many passwords to generate? "))
-        
-        # Generate and display passwords
-        for _ in range(num_passwords):
-            password = generate_password(length, uppercase, lowercase, numbers, symbols)
-            print("Generated password:", password)
-    
-    except ValueError as e:
-        print("Error:", e)
-        print("Please enter valid input.")
+def generate_multiple_passwords(count, length, uppercase=True, lowercase=True, numbers=True, symbols=True):
+    passwords = []
+    for _ in range(count):
+        password = generate_password(length, uppercase, lowercase, numbers, symbols)
+        passwords.append(password)
+    return passwords
 
-if __name__ == "__main__":
-    main()
+# Example usage:
+password_length = 12
+password_count = 5
+generated_passwords = generate_multiple_passwords(password_count, password_length)
+
+for i, password in enumerate(generated_passwords):
+    print(f"Password {i+1}: {password}")
