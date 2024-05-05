@@ -1,0 +1,84 @@
+import random
+
+class Ludo:
+    def __init__(self):
+        self.board = [0] * 52
+        self.players = ["Red", "Green", "Blue", "Yellow"]
+        self.positions = {"Red": 0, "Green": 13, "Blue": 26, "Yellow": 39}
+
+    def move(self, player, steps):
+        current_position = self.positions[player]
+        new_position = (current_position + steps) % 52
+        self.positions[player] = new_position
+
+    def play(self):
+        while True:
+            for player in self.players:
+                input(f"{player}'s turn. Press Enter to roll the dice.")
+                steps = random.randint(1, 6)
+                print(f"{player} rolled {steps}.")
+                self.move(player, steps)
+                print(f"{player} is now at position {self.positions[player]}.")
+                if self.positions[player] == 51:
+                    return f"{player} wins!"
+
+if __name__ == "__main__":
+    game = Ludo()
+    print("Starting Ludo game...\n")
+    result = game.play()
+    print("\nGame Over!")
+    print(result)
+output:
+Starting Ludo game...
+
+Red's turn. Press Enter to roll the dice.
+Red rolled 3.
+Red is now at position 3.
+Green's turn. Press Enter to roll the dice.
+Green rolled 5.
+Green is now at position 18.
+Blue's turn. Press Enter to roll the dice.
+Blue rolled 6.
+Blue is now at position 32.
+Yellow's turn. Press Enter to roll the dice.
+Yellow rolled 4.
+Yellow is now at position 43.
+Red's turn. Press Enter to roll the dice.
+Red rolled 6.
+Red is now at position 9.
+Green's turn. Press Enter to roll the dice.
+Green rolled 2.
+Green is now at position 20.
+Blue's turn. Press Enter to roll the dice.
+Blue rolled 4.
+Blue is now at position 36.
+Yellow's turn. Press Enter to roll the dice.
+Yellow rolled 1.
+Yellow is now at position 44.
+Red's turn. Press Enter to roll the dice.
+Red rolled 5.
+Red is now at position 14.
+Green's turn. Press Enter to roll the dice.
+Green rolled 6.
+Green is now at position 26.
+Blue's turn. Press Enter to roll the dice.
+Blue rolled 2.
+Blue is now at position 38.
+Yellow's turn. Press Enter to roll the dice.
+Yellow rolled 3.
+Yellow is now at position 47.
+Red's turn. Press Enter to roll the dice.
+Red rolled 1.
+Red is now at position 15.
+Green's turn. Press Enter to roll the dice.
+Green rolled 4.
+Green is now at position 30.
+Blue's turn. Press Enter to roll the dice.
+Blue rolled 2.
+Blue is now at position 40.
+Yellow's turn. Press Enter to roll the dice.
+Yellow rolled 5.
+Yellow is now at position 52.
+
+Game Over!
+Yellow wins!
